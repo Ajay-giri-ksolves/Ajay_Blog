@@ -1,31 +1,27 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Articles</h1>
-
+<span>
+<% @articles.each do |article|%>
 <table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Title</th>
-      <th>Content</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
 
-  <tbody>
-    <% @articles.each do |article| %>
-      <tr>
-        <td><%= article.name %></td>
-        <td><%= article.title %></td>
-        <td><%= article.content %></td>
-        <td><%= link_to 'Show', article %></td>
-        <td><%= link_to 'Edit', edit_article_path(article) %></td>
-        <td><%= link_to 'Destroy', article, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+  <p>  <th colspan="20">Name</th>
+    <th colspan="20">Title</th>
+    <th colspan="20">Content</th>
+    </p>
+<tr>
+      <td colspan="20"><%= article.name %></td>
+      <td colspan="20"><%= article.title %></td>
+      <td colspan="20"><%= article.content %></td>
+      <td><%= link_to 'Show', article %></td>
+      <td><%= link_to 'Edit', edit_article_path(article) %></td>
+      <td><%= link_to 'Destroy', article, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+  </table>
+    <%= render :partial => article.comments.last(5)%>
+  <% end %>
+  </span>
 
-<br>
 
-<%= link_to 'New Article', new_article_path %>
+
+<button type="button" name="Click to Add New Article"><%= link_to 'New Article', new_article_path %></button>

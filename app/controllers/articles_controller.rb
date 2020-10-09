@@ -1,27 +1,35 @@
 class ArticlesController < ApplicationController
+  http_basic_authenticate_with :name => "Ajay", :password => "Ajay@123", :except => [:index, :show]
   before_action :set_article, only: [:show, :edit, :update, :destroy]
 
   # GET /articles
   # GET /articles.json
   def index
-    @articles = Article.all
+    # @article = Article.find(params[:id])
+    @comment=Comment.new(article: @article)
+    @articles = Article.all()
+    @comments =
     respond_to do |format|
     format.html  # index.html.erb
     format.json  { render :json => @articles }
+    format.atom
   end
+
   end
 
   # GET /articles/1
   # GET /articles/1.json
   def show
-    #@comment = Comment.new
+    #@comment = Article.comment
     #@comment.article_id = @article.id
+
    @article = Article.find(params[:id])
     #@comment = @article.comments.build
   respond_to do |format|
     format.html  # show.html.erb
     format.json  { render :json => @article }
   end
+
   end
 
   # GET /articles/new
@@ -43,7 +51,6 @@ class ArticlesController < ApplicationController
   # POST /articles.json
   def create
     @article = Article.new(article_params)
-
     respond_to do |format|
       if @article.save
         format.html { redirect_to @article, notice: 'Article was successfully created.' }
@@ -87,6 +94,6 @@ class ArticlesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def article_params
-      params.require(:article).permit(:name, :title, :content)
+      params.require(:article).permit(:name, :title, :content,:comment)
     end
 end

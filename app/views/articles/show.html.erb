@@ -14,7 +14,19 @@
   <strong>Content:</strong>
   <%= @article.content %>
 </p>
+<p>
+  <strong>Image for Content</strong><br>
+<%# <%= image_tag(@article.cover.url) if @article.cover %>
+<image src="<%=url_for(@article.cover) %>"
+</p>
 <h2>Comments</h2>
+<p>
+  <% if @article.comments.count >1 %>
+  <%= @article.comments.count %> users commented on this post.
+<% else %>
+     <%= @article.comments.count %> user commented on this post.
+<% end %>
+</p>
 <%= render @article.comments%>
 
 
