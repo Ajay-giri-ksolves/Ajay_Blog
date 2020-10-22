@@ -1,43 +1,64 @@
-<p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @article.name %>
-</p>
+<%# <!-- <p>  <%= image_tag (@article.user.avatar_thumbnail) if @article.user.avatar_thumbnail%> --> %>
+  <%if current_user && current_user.active==true%>
+    <strong><%=current_user.email.split("@").first%></strong>
+    <%= image_tag (current_user.avatar_thumbnail) if current_user.avatar_thumbnail%>(online)
 
-<p>
-  <strong>Title:</strong>
-  <%= @article.title %>
-</p>
+    <div>
+      <button type="button" name="Sign_out"><%= link_to 'Sign out', destroy_user_session_path, method: :delete%></button>
+      <p>
+        <%= link_to 'Edit Account',  edit_user_registration_path%>
+      </p>
+    </div>
+  <%end%>
+
+  <p>
+    <strong>Name:</strong>
+    <%= @article.name %>
+  </p>
+
+  <p>
+    <strong>Title:</strong>
+    <%= @article.title %>
+  </p>
 
 <p>
   <strong>Content:</strong>
   <%= @article.content %>
 </p>
-<p>
-  <strong>Image for Content</strong><br>
-<%# <%= image_tag(@article.cover.url) if @article.cover %>
-<image src="<%=url_for(@article.cover) %>"
-</p>
-<h2>Comments</h2>
-<p>
-  <% if @article.comments.count >1 %>
-  <%= @article.comments.count %> users commented on this post.
+
+  <%if @article.image.present?%>
+    <%=image_tag(@article.image)%>
+  <%else%>
+    <strong>No Image for Article.</strong>
+  <%end%>
+  <% pre_like = @article.likes.find { |like| like.user_id == current_user.id} %>
+<% if pre_like %>
+  <%= button_to 'Unlike', article_like_path(@article, pre_like), method: :delete %>
 <% else %>
-     <%= @article.comments.count %> user commented on this post.
+  <%= button_to 'Like', article_likes_path(@article), method: :article %>
 <% end %>
-</p>
-<%= render @article.comments%>
+<p><%= @article.likes.count %> <%= (@article.likes.count) == 1 ? 'Like' : 'Likes'%></p>
+<h2>Comments</h2>
+  <p>
+    <% if @article.comments.count >1 %>
+      <%= @article.comments.count %> users commented on this post.
+    <% else %>
+      <%= @article.comments.count %> user commented on this post.
+    <% end %>
+  </p>
+
+  <%= render @article.comments%>
 
 
 
 
 
-<h2>Add a comment:</h2>
-<%= render "comments/form" %>
+  <h2>Add a comment:</h2>
+  <%= render "comments/form" %>
 
 
-<br />
+  <br />
 
-<%= link_to 'Edit', edit_article_path(@article) %> |
-<%= link_to 'Back', articles_path %>
+  <%= link_to 'Edit', edit_article_path(@article) %> |
+  <%= link_to 'Back', articles_path %>

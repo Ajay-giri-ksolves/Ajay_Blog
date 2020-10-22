@@ -1,15 +1,24 @@
+<%if current_user%>
 <%= form_for([@article, @article.comments.build]) do |f| %>
   <div class="field">
-    <%= f.label :commenter %><br />
-    <%= f.text_field :commenter %>
-  </div>
-  <div class="field">
-    <%= f.label :body %><br />
+    <%= f.label :Comment %><br />
     <%= f.text_area :body %>
   </div>
+
   <%= f.hidden_field :user_id,value: current_user.id%>
   <%= f.hidden_field :article_id%>
+
   <div class="actions">
     <%= f.submit %>
   </div>
 <% end %>
+<%else%>
+<strong>Please sign in to add a comment.</strong>
+<div>
+<button type="button" name="Sign_up"><%= link_to 'Sign up', new_user_registration_path%>
+</div>
+<br>
+<div>
+<button type="button" name="Log_in"><%= link_to "log_in", "/users/sign_in" %></button>
+</div>
+<%end%>

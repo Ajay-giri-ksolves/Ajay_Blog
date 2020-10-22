@@ -1,0 +1,34 @@
+
+<h1>Welcome to the page</h1>
+<% if current_user %>
+<h1>Hello <%=current_user.email.split("@").first%> </h1>
+<div>
+  <%if current_user.active=true%>
+  <strong>Online</strong>
+  <%end%>
+  <p>
+<%= link_to 'Sign out', destroy_user_session_path, method: :delete %>
+</p>
+<p>
+<%= link_to 'Edit Account',  edit_user_registration_path%>
+</p>
+<br>
+<div >
+  <%=image_tag(current_user.avatar_thumbnail)%>
+
+</div>
+
+</div>
+
+<%else%>
+<div>
+<%= link_to 'Sign up', new_user_registration_path%>
+</div>
+<br>
+<div>
+<button type="button" name="Sign_up"><%= link_to "log_in", "/users/sign_in" %></button>
+</div>
+<br>
+<%end%>
+<br>
+<h3><button type="button" name="Sign_up"><%= link_to "My Blog", articles_path %></button></h3>

@@ -1,6 +1,30 @@
-<p id="notice"><%= notice %></p>
 
+<%if current_user && current_user.active=true%>
+<strong><%=current_user.email.split("@").first%></strong>
+  <%= image_tag (current_user.avatar_thumbnail) if current_user.avatar_thumbnail%>(online)
+
+<div>
+  <button type="button" name="Sign_out"><%= link_to 'Sign out', destroy_user_session_path, method: :delete%></button>
+  <p>
+  <%= link_to 'Edit Account',  edit_user_registration_path%>
+  </p>
+</div>
+<div>
+<%else%>
+<div>
+<button type="button" name="Sign_up"><%= link_to 'Sign up', new_user_registration_path%>
+</div>
+<br>
+<div>
+<button type="button" name="Log_in"><%= link_to "log_in", "/users/sign_in" %></button>
+</div>
+<%end%>
 <h1>Articles</h1>
+<div >
+  <%# <%= paginate(@articles) %> %>
+
+
+
 <span>
 <% @articles.each do |article|%>
 <table>
@@ -14,13 +38,18 @@
       <td colspan="20"><%= article.title %></td>
       <td colspan="20"><%= article.content %></td>
       <td><%= link_to 'Show', article %></td>
+      <%if current_user%>
       <td><%= link_to 'Edit', edit_article_path(article) %></td>
       <td><%= link_to 'Destroy', article, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <%end%>
   </tr>
   </table>
-    <%= render :partial => article.comments.last(5)%>
+<p><%= article.likes.count %> <%= (article.likes.count) == 1 ? 'Like' : 'Likes'%></p>
+  <%= render :partial => article.comments.last(5)%>
   <% end %>
   </span>
+  <%= paginate(@articles) %>
+  </div>
 
 
 

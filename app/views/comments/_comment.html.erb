@@ -1,10 +1,10 @@
 
 <p>
+  <div >
+    <%= image_tag (comment.user.avatar_thumbnail) if comment.user.avatar_thumbnail%>
+  </div>
 
-<strong>  <%=comment.user.email%></strong> wrote :
-  <br>
-  <b>Commenter:</b>
-  <%= comment.commenter %>
+  <strong>  <%=comment.user.email%></strong> wrote :
 </p>
 
 <p>

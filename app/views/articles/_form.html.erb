@@ -24,9 +24,11 @@
     <%= f.text_area :content,required:true %>
   </div>
   <div class="feild">
-    <%= f.label :cover,presence:true%>
-<%= f.file_field :cover, required:true%>
+    <%= f.label :image,presence:true%>
+<%= f.file_field :image%>
   </div>
+  <%= f.hidden_field :user_id,value: current_user.id%>
+
   <br>
   <div class="actions">
     <%= f.submit %>
