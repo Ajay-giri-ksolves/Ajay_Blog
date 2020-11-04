@@ -7,7 +7,7 @@ class CommentsController < ApplicationController
   end
  private
     def comment_params
-      params.require(:comment).permit(:commenter, :body,:user_id,:image)
+      params.require(:comment).permit(:commenter, :body,:user_id,:image,:comment_image)
     end
  def destroy
     @article = Article.find(params[:article_id])

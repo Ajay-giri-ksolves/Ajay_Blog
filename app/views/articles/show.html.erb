@@ -11,7 +11,6 @@
       </p>
     </div>
   <%end%>
-
   <p>
     <strong>Name:</strong>
     <%= @article.name %>
@@ -28,7 +27,7 @@
 </p>
 
   <%if @article.image.present?%>
-    <%=image_tag(@article.image)%>
+    <%=image_tag(@article.image_thumbnail)%>
   <%else%>
     <strong>No Image for Article.</strong>
   <%end%>

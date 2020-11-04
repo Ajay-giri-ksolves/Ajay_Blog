@@ -5,7 +5,6 @@
 <div>
   <%if current_user.active=true%>
   <strong>Online</strong>
-  <%= current_user.address%>
   <%end%>
   <p>
 <%= link_to 'Sign out', destroy_user_session_path, method: :delete %>

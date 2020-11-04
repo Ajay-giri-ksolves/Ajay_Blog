@@ -103,7 +103,7 @@ end
 
     # Only allow a list of trusted parameters through.
     def article_params
-      params.require(:article).permit(:name, :title, :content,:comment,:image,:avatar)
+      params.require(:article).permit(:name,:user_id, :title, :content,:comment,:image,:avatar,:comment_image)
     end
 
 end
