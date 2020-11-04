@@ -64,6 +64,7 @@ end
     @article = Article.find(params[:id])
     @article.liked_by current_user
     if request.xhr?
+      format.js
       render json: { count: @article.get_likes.size, id: params[:id] }
     else
       redirect_to @article

@@ -1,6 +1,7 @@
 class LikesController < ApplicationController
   before_action :find_article
   before_action :find_like, only: [:destroy]
+
   def create
     if already_liked?
       flash[:notice] = "You can't like more than once"
@@ -9,6 +10,7 @@ class LikesController < ApplicationController
       redirect_to article_path(@article)
     end
   end
+
   def destroy
     if !(already_liked?)
       flash[:notice] = "Cannot unlike"
@@ -16,7 +18,8 @@ class LikesController < ApplicationController
       @like.destroy
     end
     redirect_to article_path(@article)
-end
+  end
+
   private
   def find_article
     @article = Article.find(params[:article_id])
