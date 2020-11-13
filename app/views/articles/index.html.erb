@@ -29,12 +29,11 @@
 <% @articles.each do |article|%>
 <table>
 
-  <p>  <th colspan="20">Name</th>
+  <p>
     <th colspan="20">Title</th>
     <th colspan="20">Content</th>
     </p>
 <tr>
-      <td colspan="20"><%= article.name %></td>
       <td colspan="20"><%= article.title %></td>
       <td colspan="20"><%= article.content %></td>
       <td><%= link_to 'Show', article %></td>
@@ -44,6 +43,7 @@
       <%end%>
   </tr>
   </table>
+  <%# <!-- <p><small>Created by<%= @article.user_id%></small></p> --> %>
 <p><%= article.likes.count %> <%= (article.likes.count) == 1 ? 'Like' : 'Likes'%></p>
   <%= render :partial => article.comments.last(5)%>
   <% end %>

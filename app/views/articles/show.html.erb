@@ -11,10 +11,6 @@
       </p>
     </div>
   <%end%>
-  <p>
-    <strong>Name:</strong>
-    <%= @article.name %>
-  </p>
 
   <p>
     <strong>Title:</strong>
@@ -31,12 +27,14 @@
   <%else%>
     <strong>No Image for Article.</strong>
   <%end%>
-  <% pre_like = @article.likes.find { |like| like.user_id == current_user.id} %>
-<% if pre_like %>
-  <%= button_to 'Unlike', article_like_path(@article, pre_like), method: :delete, remote: true,html:{id:"unlikebtn"} %>
-<% else %>
-  <%= button_to 'Like', article_likes_path(@article), method: :article, remote: true,html:{id:"likebtn"} %>
-<% end %>
+  <%if current_user%>
+    <% pre_like = @article.likes.find { |like| like.user_id == current_user.id} %>
+    <% if pre_like %>
+      <%= button_to 'Unlike', article_like_path(@article, pre_like), method: :delete, remote: true,html:{id:"unlikebtn"} %>
+    <% else %>
+      <%= button_to 'Like', article_likes_path(@article), method: :article, remote: true,html:{id:"likebtn"} %>
+    <% end %>
+  <%end%>
 <p><%= @article.likes.count %> <%= (@article.likes.count) == 1 ? 'Like' : 'Likes'%></p>
 <h2>Comments</h2>
   <p>
@@ -51,11 +49,20 @@
 
 
 
+  <%if current_user%>
 
-
-  <h2>Add a comment:</h2>
-  <%= render "comments/form" %>
-
+    <h2>Add a comment:</h2>
+    <%= render "comments/form" %>
+  <%else%>
+    <p>Please sign in to add a comment</p>
+    <div>
+      <button type="button" name="Sign_up"><%= link_to 'Sign up', new_user_registration_path%>
+    </div>
+      <br>
+    <div>
+      <button type="button" name="Log_in"><%= link_to "log_in", "/users/sign_in" %></button>
+    </div>
+  <%end%>
 
   <br />
 

@@ -7,9 +7,10 @@ class ArticlesController < ApplicationController
   # GET /articles.json
   def index
     # @article = Article.find(params[:id])
+
     @comment=Comment.new(article: @article)
     @articles = Article.all()
-    @comments =
+    @articles = Article.includes(:user)
     respond_to do |format|
     format.html  # index.html.erb
     format.json  { render :json => @articles }
@@ -50,6 +51,9 @@ end
   # POST /articles.json
   def create
     @article = Article.new(article_params)
+
+    @article.user_id = current_user.id
+    # binding.pry
     respond_to do |format|
       if @article.save
         format.html { redirect_to @article, notice: 'Article was successfully created.' }
@@ -103,7 +107,7 @@ end
 
     # Only allow a list of trusted parameters through.
     def article_params
-      params.require(:article).permit(:name,:user_id, :title, :content,:comment,:image,:avatar,:comment_image)
+      params.require(:article).permit(:name,:users_id, :title, :content,:comment,:image,:avatar,:comment_image)
     end
 
 end
